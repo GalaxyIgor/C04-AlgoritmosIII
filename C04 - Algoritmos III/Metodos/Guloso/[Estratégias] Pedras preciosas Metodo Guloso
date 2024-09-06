@@ -1,0 +1,59 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+struct Pedra {
+    string nome;
+    int peso;
+    int volume;
+    int valor;
+};
+
+// Comparador para ordenar as pedras com base na razão valor/peso ou valor/volume
+bool comparador(Pedra a, Pedra b) {
+    double razao1 = (double) a.valor / (a.peso + a.volume);
+    double razao2 = (double) b.valor / (b.peso + b.volume);
+    return razao1 > razao2;
+}
+
+void escolhe_pedras_gulosa(vector<Pedra>& pedras, int cap_peso, int cap_volume) {
+    // Ordena as pedras pela melhor razão valor/(peso + volume)
+    sort(pedras.begin(), pedras.end(), comparador);
+
+    int peso_atual = 0, volume_atual = 0;
+    vector<string> pedras_selecionadas;
+
+    for (auto& pedra : pedras) {
+        if (peso_atual + pedra.peso <= cap_peso && volume_atual + pedra.volume <= cap_volume) {
+            pedras_selecionadas.push_back(pedra.nome);
+            peso_atual += pedra.peso;
+            volume_atual += pedra.volume;
+        }
+    }
+
+    // Imprime as pedras selecionadas
+    for (auto& nome : pedras_selecionadas) {
+        cout << nome << endl;
+    }
+}
+
+int main() {
+    int n;
+    cin >> n;
+    vector<Pedra> pedras(n);
+
+    for (int i = 0; i < n; i++) {
+        float volume;
+        cin >> pedras[i].nome;
+        cin >> volume;
+        pedras[i].volume = volume * 1000; // Convertendo metros cúbicos para litros
+        cin >> pedras[i].peso;
+        cin >> pedras[i].valor;
+    }
+
+    escolhe_pedras_gulosa(pedras, 400, 1000);
+
+    return 0;
+}

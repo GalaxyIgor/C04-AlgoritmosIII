@@ -1,0 +1,77 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+struct Pedra {
+    string nome;
+    int peso;
+    int volume;
+    int valor;
+};
+
+int calcula_valor_total(const vector<Pedra>& pedras, const vector<bool>& selecionadas, int cap_peso, int cap_volume) {
+    int valor_total = 0;
+    int peso_total = 0;
+    int volume_total = 0;
+
+    for (size_t i = 0; i < pedras.size(); i++) {
+        if (selecionadas[i]) {
+            peso_total += pedras[i].peso;
+            volume_total += pedras[i].volume;
+            if (peso_total > cap_peso || volume_total > cap_volume) {
+                return 0; // Se exceder a capacidade, essa combinação não é válida
+            }
+            valor_total += pedras[i].valor;
+        }
+    }
+
+    return valor_total;
+}
+
+void escolhe_pedras_iterativo(const vector<Pedra>& pedras, int cap_peso, int cap_volume) {
+    int n = pedras.size();
+    int melhor_valor = 0;
+    vector<bool> melhor_combinação(n, false);
+
+    // Testa todas as combinações possíveis (2^n combinações)
+    for (int i = 0; i < (1 << n); i++) {
+        vector<bool> selecionadas(n, false);
+        for (int j = 0; j < n; j++) {
+            if (i & (1 << j)) {
+                selecionadas[j] = true;
+            }
+        }
+        int valor_atual = calcula_valor_total(pedras, selecionadas, cap_peso, cap_volume);
+        if (valor_atual > melhor_valor) {
+            melhor_valor = valor_atual;
+            melhor_combinação = selecionadas;
+        }
+    }
+
+    // Imprime as pedras selecionadas
+    for (int i = 0; i < n; i++) {
+        if (melhor_combinação[i]) {
+            cout << pedras[i].nome << endl;
+        }
+    }
+}
+
+int main() {
+    int n;
+    cin >> n;
+    vector<Pedra> pedras(n);
+
+    for (int i = 0; i < n; i++) {
+        float volume;
+        cin >> pedras[i].nome;
+        cin >> volume;
+        pedras[i].volume = volume * 1000; // Convertendo metros cúbicos para litros
+        cin >> pedras[i].peso;
+        cin >> pedras[i].valor;
+    }
+
+    escolhe_pedras_iterativo(pedras, 400, 1000);
+
+    return 0;
+}
