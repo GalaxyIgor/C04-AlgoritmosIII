@@ -1,0 +1,156 @@
+#include <iostream>
+#include <list>
+
+#define MAX_VERTICES 10
+#define INT_MAX 999999
+
+using namespace std;
+
+struct Aresta {
+    int origem, destino, peso;
+};
+
+void prim(list<Aresta> adj[], int n, int start) {
+    bool intree[n];
+    int distance[n], parent[n];
+    for (int i = 0; i < n; i++) {
+        intree[i] = false;
+        distance[i] = INT_MAX;
+        parent[i] = -1;
+    }
+    distance[start] = 0;
+    int v = start;
+    while (intree[v] == false) {
+        intree[v] = true;
+        list<Aresta>::iterator it;
+        for (it = adj[v].begin(); it != adj[v].end(); it++) {
+            Aresta aresta = *it;
+            if (distance[aresta.destino] > aresta.peso && intree[aresta.destino] == false) {
+                distance[aresta.destino] = aresta.peso;
+                parent[aresta.destino] = v;
+            }
+        }
+        v = 0;
+        int dist = INT_MAX;
+        for (int i = 0; i < n; i++) {
+            if (intree[i] == false && dist > distance[i]) {
+                dist = distance[i];
+                v = i;
+            }
+        }
+    }
+    int total = 0;
+    cout << "Arvore Geradora Minima:" << endl;
+    for (int i = 0; i < n; i++) {
+        if (parent[i] != -1) {
+            cout << parent[i] << " " << i << endl;
+            total += distance[i];
+        }
+    }
+    cout << "Custo: " << total << endl;
+}
+
+int main() {
+    int vertices, orientado, start;
+    cin >> vertices >> orientado >> start;
+
+    list<Aresta> grafo[MAX_VERTICES];
+    int origem, destino, peso;
+
+    while (true) {
+        cin >> origem >> destino >> peso;
+        if (origem == -1 && destino == -1 && peso == -1) break;
+        grafo[origem].push_back({origem, destino, peso});
+        if (orientado == 0) {
+            grafo[destino].push_back({destino, origem, peso});
+        }
+    }
+
+    prim(grafo, vertices, start);
+
+    return 0;
+}
+
+/*Uma árvore geradora mínima para um grafo G, ponderado, não direcionado e conexo, é um subconjunto das arestas que G que mantém o grafo conexo, e cuja soma dos pesos das arestas é p menor possível.
+
+Dentre os algoritmos que resolvem este problema, temos o de Prim, que coloca um vértice inicial na árvore e vai adicionando as arestas de menor custo entre um vértice inicial na árvore e outro fora dela, até que todos os vértices estejam conectados.
+
+O pseudocódigo deste algoritmo é mostrado abaixo:
+
+MST_PRIM(G,start)
+    para cada u em V[G]
+        intree[u] = false
+        distance[u] = INT_MAX
+        parent[u] = -1
+    distance[start] = 0
+    v = start
+    enquanto(intree[v] == false)
+        intree[v] = true
+        para cada p em Adj[v]
+            destino = p->v
+            weight = p->peso
+            if(distance[destino] > weight && intree[destino]==false)
+                distance[destino] = weight
+                parent[destino] = v
+        v = 0
+        dist = INT_MAX
+        para cada u em V[G]
+            se(intree[u]==false && dist>distance[u])
+                dist = distance[u]
+                v = u
+Faça um programa que leia dos dados dos vértices e arestas de um grafo e os armazene em uma lista de adjacências. Dpois o programa deve mostrar a sua árvore geradora mínima.
+
+Faça uma função para implementar o algoritmo de Prim. O cabeçalho desta função deve ser:
+
+void prim(list<no>adj[], int nVertices, int start)
+Entrada
+A entrada consiste de várias linhas:
+A primeira linha contém 3 inteiros: 
+
+- o primeiro corresponde ao número de vértices do grafo. Você pode considerar que o grafo terá no máximo 10 vértices.
+
+- o segundo define se o grafo é orientado (1) ou não orientado (0)
+
+- o terceiro identifica o vértice inicial da árvore
+
+As demais linhas três inteiros, que correspondem ao vértice de origem, o ´vertice de destino e o peso de cada aresta, respectivamente. A entrada de dados termina quando ocorrer uma linha com três números iguais a -1 (esta não deve ser inserida no grafo).
+
+Saída
+A saída deverá mostrar as arestas que constituem a árvore geradora mínima, bem como o custo total dela, como no exemplo abaixo.
+
+Exemplo de entrada         
+Exemplo de saída
+9 0 0
+0 1 4
+0 7 8
+1 2 8 
+1 7 11
+2 3 7
+2 5 4
+2 8 2
+3 4 9
+3 5 14
+4 5 10
+5 6 2
+6 7 1
+6 8 6
+7 8 7
+-1 -1 -1	Arvore Geradora Minima:
+0 1
+1 2
+2 3
+3 4
+2 5
+5 6
+6 7
+2 8
+Custo: 37
+
+
+
+
+
+
+
+
+*/

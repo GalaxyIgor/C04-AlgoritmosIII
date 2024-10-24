@@ -1,0 +1,106 @@
+#include<iostream>
+#include<queue>
+#include<vector>
+#include<climits>
+
+using namespace std;
+
+// Estrutura para representar uma aresta no grafo
+struct Aresta {
+    int destino, peso;
+};
+
+// Função para encontrar o menor caminho usando o algoritmo de Dijkstra
+int dijkstra(vector<Aresta> adj[], int n, int origem, int destino) {
+    vector<int> dist(n + 1, INT_MAX); // Vetor de distâncias, inicializado com "infinito"
+    dist[origem] = 0;
+
+    // Fila de prioridade para armazenar os nós a serem processados (menor peso tem maior prioridade)
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+    pq.push({0, origem}); // Inicia com a cidade de origem
+
+    while (!pq.empty()) {
+        int atual = pq.top().second; // Pega o nó com a menor distância
+        int distanciaAtual = pq.top().first;
+        pq.pop();
+
+        // Se já atingimos o destino, retornamos a distância mínima
+        if (atual == destino) return distanciaAtual;
+
+        // Explora os vizinhos do nó atual
+        for (auto &vizinho : adj[atual]) {
+            int prox = vizinho.destino;
+            int peso = vizinho.peso;
+
+            // Se encontramos um caminho mais curto, atualizamos a distância e adicionamos à fila
+            if (dist[prox] > dist[atual] + peso) {
+                dist[prox] = dist[atual] + peso;
+                pq.push({dist[prox], prox});
+            }
+        }
+    }
+
+    // Se não há caminho, retornamos -1
+    return -1;
+}
+
+int main() {
+    int N, M; // N = número de cidades, M = número de estradas
+    cin >> N >> M;
+
+    vector<Aresta> adj[N + 1]; // Lista de adjacências para representar o grafo
+
+    // Leitura das estradas
+    for (int i = 0; i < M; i++) {
+        int u, v, t;
+        cin >> u >> v >> t;
+        adj[u].push_back({v, t});
+        adj[v].push_back({u, t}); // Grafo não direcionado
+    }
+
+    int A, B; // A = cidade de origem, B = cidade de destino
+    cin >> A >> B;
+
+    // Chama a função dijkstra e imprime o resultado
+    int resultado = dijkstra(adj, N, A, B);
+    
+    if (resultado == -1) {
+        cout << "Não há caminho entre as cidades" << endl;
+    } else {
+        cout << resultado << endl;
+    }
+
+    return 0;
+}
+
+/*Contexto:
+Uma empresa de logística deseja encontrar a rota mais rápida para entregar um pacote entre duas cidades 
+em uma rede que conecta várias cidades. O objetivo é minimizar o tempo total de entrega.
+
+Entrada:
+A primeira linha contém dois inteiros, N e M, o número de cidades e o número de estradas, respectivamente. 
+As próximas M linhas descrevem as estradas com três inteiros cada, u, v, e t, indicando uma estrada entre a cidade u e a cidade v com um tempo de viagem t. A última linha contém dois inteiros, A e B, representando a cidade de origem e destino.
+
+Saída:
+O tempo mínimo de viagem de A para B.
+
+Casos de Teste:
+Exemplo de entrada         
+Exemplo de saída
+5 7
+1 2 2
+1 3 4
+2 3 1
+2 4 7
+3 4 3
+3 5 1
+4 5 5
+1 5	
+
+
+4
+
+
+
+
+*/

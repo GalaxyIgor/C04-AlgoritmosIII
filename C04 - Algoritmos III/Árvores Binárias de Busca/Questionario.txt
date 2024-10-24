@@ -1,0 +1,49 @@
+Como calcular número de níveis de uma árvore binária quase completa
+h=2^h-1
+
+O número de níveis de uma árvore binária quase completa com 40 nós é:
+asso 2: Cálculo do número de níveis
+ℎ=5:    2^5 -1   =  31 nós → insuficiente.
+h=6:    2^6 -1   =  63 nós → suficiente.
+
+
+Inseri os elementos 14 20 17 10 31 12 em uma árvore binária.
+Qual a profundidade desta árvore?
+Caminhos possíveis:
+14→10→12 (profundidade = 2)
+14→20→17 (profundidade = 2)
+14→20→31 (profundidade = 2)
+    14
+   /  \
+  10  20
+  \  /  \
+  12 17 31
+
+
+como achar a profundidade
+O valor do nó à esquerda é menor que o valor do nó atual.
+O valor do nó à direita é maior que o valor do nó atual.
+
+
+Inseri os elementos 7 4 10 8 8 15 em uma árvore binária.
+Qual o nível do nó cujo campo info é 15?
+  7
+ / \
+4  10
+   /  \
+  8    15
+   \
+    8
+Nível 0: 7 (raiz)
+Nível 1: 4, 10
+Nível 2: 8, 15
+Nível 3: 8
+
+correta
+a.Em uma árvore binária, quando há elementos repetidos, estes são sempre inseridos como filhos direitos.
+b.Uma árvore quase completa de profundidade p sempre tem folhas nos níveis p e p-1. 
+c.Uma árvore estritamente binária de profundidade p pode ter folhas desde o nível 1 até o nível p. 
+d.Uma árvore estritamente binária pode ser quase completa.
+
+falsa
+e.Em uma árvore quase completa, todos os nós têm sempre zero ou dois filhos. 

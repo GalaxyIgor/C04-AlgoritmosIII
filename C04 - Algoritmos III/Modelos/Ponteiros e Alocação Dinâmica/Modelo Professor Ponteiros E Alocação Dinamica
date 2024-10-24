@@ -1,0 +1,81 @@
+#include<iostream>
+using namespace std;
+
+struct ponto {
+	int x, y;
+};
+
+int main(){
+	
+	int a;
+	a = 5;
+	
+	cout << "Conteúdo de a: " << a << endl;
+	cout << "Endereço de a: " << &a << endl;
+	cout << "Conteúdo armazenado no endereço de a: " << *&a << endl;
+		
+	int * p;
+	
+	p = &a;
+	
+	cout << "Conteúdo de p: " << p << endl;
+	cout << "Endereço de p: " << &p << endl;
+	cout << "Conteúdo armazenado no endereço apontado por p: " << *p << endl;
+	
+	*p = 7;
+	
+	cout << "Conteúdo de a alterado por p: " << a << endl;
+	
+	
+	int b[10] = {0,1,2,3,4,5,6,7,8,9};
+	
+	cout << "Conteúdo de b: " << b << endl;
+	cout << "Endereço de b: " << &b << endl;
+	cout << "Conteúdo armazenado no endereço de b: " << *&b << endl;
+	
+	p = b;
+	
+	cout << "Conteúdo de p: " << p << endl;
+	cout << "Endereço de p: " << &p << endl;
+	cout << "Conteúdo armazenado no endereço apontado por p: " << *p << endl;
+	
+	
+	cout << "Conteúdo de b na terceira posição: " << b[4] << endl;
+	cout << "Endereço de b na quarta posição: " << &b[4] << endl;
+	
+	cout << "Conteúdo de b na terceira posição usando p: " << *(p+4) << endl;
+	
+	ponto ponto1 = {5,10};
+	
+	cout << "Conteúdo de x de ponto1: " << ponto1.x << endl;
+	cout << "Conteúdo de y de ponto1: " << ponto1.y << endl;
+	cout << "Endereço de ponto1: " << &ponto1 << endl;
+	cout << "Endereço de x de ponto1: " << &ponto1.x << endl;
+	cout << "Endereço de y de ponto1: " << &ponto1.y << endl;
+	
+	ponto * ptr_ponto;
+	
+	ptr_ponto = &ponto1;
+	
+	cout << "Conteúdo de ptr_ponto: " << ptr_ponto << endl;
+	cout << "Conteúdo de x do endereço apontado por ptr_ponto: " 
+	<< ptr_ponto->x << endl;
+	cout << "Conteúdo de y do endereço apontado por ptr_ponto: " 
+	<< ptr_ponto->y << endl;
+	
+	
+	ptr_ponto = new ponto;
+	ptr_ponto->x = 13;
+	ptr_ponto->y = 34;
+	
+	cout << "Conteúdo de ptr_ponto alocado dinamicamente: " << ptr_ponto << endl;
+	cout << "Conteúdo de x do endereço apontado por ptr_ponto: " 
+	<< ptr_ponto->x << endl;
+	cout << "Conteúdo de y do endereço apontado por ptr_ponto: " 
+	<< ptr_ponto->y << endl;
+	
+	
+	delete ptr_ponto;
+	
+	return 0;
+}

@@ -1,0 +1,35 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int N;
+
+    // Lendo o tamanho do vetor
+    cin >> N;
+
+    // Alocação dinâmica do vetor de inteiros
+    int* vetor = new int[N];
+
+    // Lendo os elementos do vetor
+    for (int i = 0; i < N; ++i) {
+        cin >> vetor[i];
+    }
+
+    int contador = 0;  // Contador de elementos pares e positivos
+
+    // Usando ponteiro para percorrer o vetor
+    int* ptr = vetor;
+    for (int i = 0; i < N; ++i) {
+        if (*(ptr + i) > 0 && *(ptr + i) % 2 == 0) {
+            contador++;
+        }
+    }
+
+    // Exibindo o número de elementos pares e positivos
+    cout << contador << endl;
+
+    // Liberando a memória alocada
+    delete[] vetor;
+
+    return 0;
+}

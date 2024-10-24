@@ -1,0 +1,38 @@
+gulosa = n
+força bruto = 2^n
+programação dinâmica = c.n
+
+
+gulosa = pegar sempre o menor
+dikstra = distancia para chegar a posicao
+
+
+(A0×(A1×A2))×A3
+
+
+BFS (Busca em Largura): Explora o grafo camada por camada, 
+verificando os nós vizinhos de forma sequencial. Usado para encontrar o caminho mais curto em grafos não ponderados.
+
+DFS (Busca em Profundidade): Explora o grafo seguindo um caminho até o final antes de voltar. 
+Útil para detectar ciclos e conectar componentes.
+
+Dijkstra: Algoritmo de caminho mínimo para grafos ponderados, encontra o caminho mais curto de um vértice inicial para todos os outros, 
+utilizando uma fila de prioridades.
+
+Prim: Encontra a árvore geradora mínima em grafos ponderados, conectando todos os nós com o menor custo possível, 
+também usando uma fila de prioridades.
+
+
+
+Força Bruta (Brute Force): Tenta todas as possíveis soluções para encontrar a resposta correta. É simples, mas ineficiente, 
+especialmente para grandes entradas.
+
+Dividir e Conquistar (Divide and Conquer): Divide o problema em subproblemas menores, resolve cada um separadamente e combina as soluções. 
+Exemplo clássico: a ordenação por mergesort.
+
+Estratégia Gulosa (Greedy): Faz a escolha ótima em cada etapa local, na esperança de que isso leve à solução global ótima. 
+Exemplo: algoritmo de Prim ou Dijkstra para grafos.
+
+Programação Dinâmica (Dynamic Programming): Resolve problemas dividindo-os em subproblemas sobrepostos 
+e armazenando as soluções intermediárias para evitar cálculos repetidos. 
+Exemplo: problema da mochila.

@@ -1,0 +1,41 @@
+#include <iostream>
+using namespace std;
+
+struct node {
+	int info;
+	struct node * left;
+	struct node * right;
+};
+
+void insert(node *& curr, int new_info){
+	if(curr == NULL){
+		curr = new node;
+		curr->info = new_info;
+		curr->left = NULL;
+		curr->right = NULL;
+	} else {
+		if(new_info < curr->info){
+			insert(curr->left, new_info);
+		} else {
+			insert(curr->right, new_info);
+		}
+	}
+}
+
+node * search(node * curr, int info){
+	if(curr == NULL){
+		return NULL;
+	} else if(info == curr->info){
+		return curr;
+	} else {
+		if(info < curr->info){
+			return search(curr->left, info);
+		} else {
+			return search(curr->right, info);
+		}
+	}
+}
+
+int main(){
+	return 0
+}

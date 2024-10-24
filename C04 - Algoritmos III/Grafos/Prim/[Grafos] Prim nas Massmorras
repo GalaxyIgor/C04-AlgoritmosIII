@@ -1,0 +1,112 @@
+#include <iostream>
+#include <list>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+struct Aresta {
+    int origem, destino, dificuldade;
+};
+
+bool compareArestas(Aresta a, Aresta b) {
+    if (a.origem == b.origem)
+        return a.destino < b.destino;
+    return a.origem < b.origem;
+}
+
+void prim(int S, list<Aresta> adj[], vector<Aresta>& mst) {
+    vector<int> chave(S, 1e9);
+    vector<bool> incluído(S, false);
+    vector<int> parent(S, -1);
+    chave[0] = 0;
+    parent[0] = -1;
+
+    for (int count = 0; count < S - 1; count++) {
+        int u = -1;
+
+        for (int i = 0; i < S; i++) {
+            if (!incluído[i] && (u == -1 || chave[i] < chave[u]))
+                u = i;
+        }
+
+        incluído[u] = true;
+
+        for (auto aresta : adj[u]) {
+            int v = aresta.destino;
+            int peso = aresta.dificuldade;
+
+            if (!incluído[v] && peso < chave[v]) {
+                chave[v] = peso;
+                parent[v] = u;
+            }
+        }
+    }
+
+    for (int i = 1; i < S; i++) {
+        if (parent[i] != -1) {
+            int u = parent[i];
+            int v = i;
+            int peso = chave[i];
+            mst.push_back({min(u, v), max(u, v), peso});
+        }
+    }
+
+    sort(mst.begin(), mst.end(), compareArestas);
+}
+
+int main() {
+    int S, C;
+    cin >> S >> C;
+
+    list<Aresta> adj[S];
+    for (int i = 0; i < C; i++) {
+        int u, v, k;
+        cin >> u >> v >> k;
+        adj[u].push_back({u, v, k});
+        adj[v].push_back({v, u, k});
+    }
+
+    vector<Aresta> mst;
+    prim(S, adj, mst);
+
+    for (auto aresta : mst) {
+        cout << aresta.origem << " " << aresta.destino << " " << aresta.dificuldade << endl;
+    }
+
+    return 0;
+}
+/*Beso da Silva está explorando a ruína de uma masmorra em busca de vestígios dos antigos habitantes dessas redondezas. 
+
+Ele fez um mapa de todos as salas dessa masmorra usando um sonar. O sonar consegue indicar quais salas têm conexões umas com as outras, além de mostrar a dificuldade de passar por essa conexão, dada que algumas passagens estão parcialmente obstruídas. Ele quer enfrentar a menor dificuldade possível para explorar essas ruínas. Por isso ele precisas da sua ajuda.
+
+Dado o número de salas, as conexões entre as salas e os níveis de dificuldade de fazer a travessia por essa conexão, retorne uma lista de conexões que formam a MST partindo da sala 0.
+
+Entrada
+
+A primeira linha da entrada contem dois número inteiros S e C indicando a quantidade de salas e a quantidade de conexões respectivamente. Cada uma das C linhas a seguir contem três números inteiros, indicando as salas i e j que têm uma conexão ( 0 <= i < j < S) e um valor inteiro k ( 0 <= k <= 10) indicando o nível de dificuldade para atravessar por essa conexão.
+
+Saída
+
+A saída deve ter, em cada linha, três números inteiros indicando as salas i e j que têm uma conexão ( 0 <= i < j < S) e um valor inteiro k ( 0 <= k <= 10) indicando o nível de dificuldade para atravessar por essa conexão de todas as conexões que formam a MST.
+
+
+
+Exemplo de entrada 
+
+5 6
+0 1 5
+1 2 3
+1 3 6
+2 4 7
+3 4 5
+0 4 10
+
+
+
+Exemplo de saída
+
+0 1 5
+1 2 3
+1 3 6
+3 4 5*/
