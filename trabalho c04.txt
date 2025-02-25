@@ -1,0 +1,47 @@
+//insercao
+1
+rogi
+aula
+1 2 3
+ 
+//insercao
+1
+macan
+carro
+3 2 1
+ 
+//insercao de outro significado
+1
+macan
+moto
+3 2 1
+ 
+//lista significados da palavra
+2
+macan
+ 
+//busca de palavra e lista significados
+3
+macan
+ 
+//similiariadade
+4
+rogi
+macan
+ 
+//insercao
+1
+yono
+animal
+28 44 66
+ 
+//nao similar
+4
+rogi
+yono
+
+//listar palavras ordem alfabética
+5
+
+//sair 
+6
